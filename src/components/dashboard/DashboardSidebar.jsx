@@ -10,16 +10,14 @@ export default function DashboardSidebar({ sections, activeSection, onSectionCha
             return (
               <li key={section.key} className={activeSection === section.key ? 'active' : ''}>
                 {isSeparatorBefore ? <div className="separator" /> : null}
-                <a
-                  href="#"
-                  onClick={(event) => {
-                    event.preventDefault()
-                    onSectionChange(section.key)
-                  }}
+                <button
+                  type="button"
+                  className="sidebar-link"
+                  onClick={() => onSectionChange(section.key)}
                 >
                   <i className={section.icon} />
                   <span>{isSupport ? 'Aide & Support' : section.label}</span>
-                </a>
+                </button>
               </li>
             )
           })}

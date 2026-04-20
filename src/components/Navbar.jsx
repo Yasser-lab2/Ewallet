@@ -1,18 +1,46 @@
-export default function Navbar() {
+const defaultLinks = [
+  { label: 'Accueil', href: '/' },
+  { label: 'A propos', href: '#' },
+  { label: 'Fonctionnalites', href: '#' },
+  { label: 'Contact', href: '#' },
+]
+
+export default function Navbar({
+  links = defaultLinks,
+  logoHref = '/',
+  logoSrc = '/assets/e-wallet-logo.avif',
+  logoAlt = 'Logo E-Wallet',
+  showLinks = true,
+  onNavClick,
+}) {
   return (
     <header>
       <nav className="navbar">
 
-        <a href="/" className="logo">
-          <img src="/assets/e-wallet-logo.avif" alt="Logo E-Wallet" />
+        <a href={logoHref} className="logo">
+          <img src={logoSrc} alt={logoAlt} />
         </a>
 
-        <ul className="nav-links">
-          <li><a href="/">Accueil</a></li>
-          <li><a href="#">À propos</a></li>
-          <li><a href="#">Fonctionnalités</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
+        {showLinks ? (
+          <ul className="nav-links">
+            {links.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  onClick={(event) => {
+                    if (onNavClick) {
+                      onNavClick(event, link)
+                    }
+                  }}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <ul className="nav-links" />
+        )}
 
       </nav>
     </header>

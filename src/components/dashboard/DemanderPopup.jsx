@@ -1,4 +1,22 @@
-export default function DemanderPopup({ onClose }) {
+import { useState } from 'react'
+
+export default function DemanderPopup({ onClose, onSubmit }) {
+  const [formData, setFormData] = useState({
+    person: '',
+    amount: '',
+    note: '',
+  })
+
+  const handleChange = (field) => (event) => {
+    setFormData((prev) => ({ ...prev, [field]: event.target.value }))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    onSubmit(formData)
+    setFormData({ person: '', amount: '', note: '' })
+  }
+
   return (
     <div className="popup-overlay active">
       <div className="popup-content">
@@ -10,7 +28,7 @@ export default function DemanderPopup({ onClose }) {
         </div>
 
         <div className="popup-body">
-          <form className="transfer-form" onSubmit={(event) => event.preventDefault()}>
+          <form className="transfer-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="requestPerson">
                 <i className="fas fa-user" /> A qui demander
@@ -20,6 +38,8 @@ export default function DemanderPopup({ onClose }) {
                 name="requestPerson"
                 type="text"
                 placeholder="Nom ou e-mail"
+                value={formData.person}
+                onChange={handleChange('person')}
                 required
               />
             </div>
@@ -35,6 +55,8 @@ export default function DemanderPopup({ onClose }) {
                   step="0.01"
                   placeholder="0.00"
                   required
+                  value={formData.amount}
+                  onChange={handleChange('amount')}
                 />
                 <span className="currency">MAD</span>
               </div>
@@ -47,6 +69,8 @@ export default function DemanderPopup({ onClose }) {
                 name="requestNote"
                 type="text"
                 placeholder="Ex: partage de repas"
+                value={formData.note}
+                onChange={handleChange('note')}
               />
             </div>
 

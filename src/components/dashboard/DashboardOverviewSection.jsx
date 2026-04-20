@@ -1,4 +1,5 @@
 export default function DashboardOverviewSection({
+  userName,
   currentDate,
   summaryCards,
   recentTransactions,
@@ -10,7 +11,7 @@ export default function DashboardOverviewSection({
     <section className="dashboard-section active">
       <div className="section-header">
         <h2>
-          Bonjour, <span>Yasser</span> !
+          Bonjour, <span>{userName}</span> !
         </h2>
         <p className="date-display">{currentDate}</p>
       </div>

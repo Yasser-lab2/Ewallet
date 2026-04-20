@@ -1,4 +1,21 @@
-export default function RechargePopup({ onClose }) {
+import { useState } from 'react'
+
+export default function RechargePopup({ onClose, onSubmit, sourceCards }) {
+  const [formData, setFormData] = useState({
+    sourceCard: '',
+    amount: '',
+  })
+
+  const handleChange = (field) => (event) => {
+    setFormData((prev) => ({ ...prev, [field]: event.target.value }))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    onSubmit(formData)
+    setFormData({ sourceCard: '', amount: '' })
+  }
+
   return (
     <div className="popup-overlay active">
       <div className="popup-content">
@@ -10,16 +27,26 @@ export default function RechargePopup({ onClose }) {
         </div>
 
         <div className="popup-body">
-          <form className="transfer-form" onSubmit={(event) => event.preventDefault()}>
+          <form className="transfer-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="rechargeSourceCard">
                 <i className="fas fa-credit-card" /> Depuis ma carte
               </label>
-              <select id="rechargeSourceCard" name="rechargeSourceCard" required defaultValue="">
+              <select
+                id="rechargeSourceCard"
+                name="rechargeSourceCard"
+                required
+                value={formData.sourceCard}
+                onChange={handleChange('sourceCard')}
+              >
                 <option value="" disabled>
                   Selectionner une carte
                 </option>
-                <option value="visa">VISA **** 4021</option>
+                {sourceCards.map((card) => (
+                  <option key={card.value} value={card.value}>
+                    {card.label}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -35,6 +62,8 @@ export default function RechargePopup({ onClose }) {
                   step="0.01"
                   placeholder="0.00"
                   required
+                  value={formData.amount}
+                  onChange={handleChange('amount')}
                 />
                 <span className="currency">MAD</span>
               </div>

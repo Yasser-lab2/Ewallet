@@ -384,7 +384,8 @@ footer {
   margin-bottom: 0.5rem;
 }
 
-.sidebar-nav a {
+.sidebar-nav a,
+.sidebar-nav .sidebar-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -392,22 +393,33 @@ footer {
   text-decoration: none;
   color: #666;
   transition: all 0.3s;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
 }
 
-.sidebar-nav a i {
+.sidebar-nav a i,
+.sidebar-nav .sidebar-link i {
   width: 20px;
   color: #999;
 }
 
 .sidebar-nav li.active a,
-.sidebar-nav a:hover {
+.sidebar-nav li.active .sidebar-link,
+.sidebar-nav a:hover,
+.sidebar-nav .sidebar-link:hover {
   background: #f0f4ff;
   color: #3b66f6;
   border-left: 3px solid #3b66f6;
 }
 
 .sidebar-nav li.active i,
-.sidebar-nav a:hover i {
+.sidebar-nav a:hover i,
+.sidebar-nav .sidebar-link:hover i,
+.sidebar-nav li.active .sidebar-link i {
   color: #3b66f6;
 }
 

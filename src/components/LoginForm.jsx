@@ -1,6 +1,14 @@
 import { useState } from 'react'
 
-export default function LoginForm() {
+export default function LoginForm({
+  email,
+  password,
+  isSubmitting,
+  feedbackMessage,
+  onEmailChange,
+  onPasswordChange,
+  onSubmit,
+}) {
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -18,7 +26,9 @@ export default function LoginForm() {
           <input
             id="mail"
             type="email"
+            value={email}
             placeholder="Adresse e-mail"
+            onChange={(event) => onEmailChange(event.target.value)}
           />
         </div>
 
@@ -26,7 +36,9 @@ export default function LoginForm() {
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
+            value={password}
             placeholder="Mot de passe"
+            onChange={(event) => onPasswordChange(event.target.value)}
           />
           <span
             className="toggle-password"
@@ -36,9 +48,11 @@ export default function LoginForm() {
           </span>
         </div>
 
-        <button type="button" className="btn btn-primary">
-          Se connecter
+        <button type="button" className="btn btn-primary" onClick={onSubmit} disabled={isSubmitting}>
+          {isSubmitting ? 'Connexion...' : 'Se connecter'}
         </button>
+
+        {feedbackMessage ? <p>{feedbackMessage}</p> : null}
 
       </div>
 
